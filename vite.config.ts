@@ -44,7 +44,7 @@ export default defineConfig(env => {
         ],
         base: './',
         build: {
-            outDir: 'custom-avatar',
+            outDir: 'custom-avatar-webapp',
             chunkSizeWarningLimit: 1200,
             minify: 'esbuild',
             cssCodeSplit: true, // 如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
