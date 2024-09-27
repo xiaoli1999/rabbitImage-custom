@@ -1,18 +1,9 @@
 <template>
-    <div class="bg">
-        <img class="bg-l-1" src="./assets/img/bg-l-1.png" alt="">
-        <img class="bg-l-2" src="./assets/img/bg-l-2.png" alt="">
-        <img class="bg-l-3" src="./assets/img/bg-l-3.png" alt="">
-        <img class="bg-r-1" src="./assets/img/bg-r-1.png" alt="">
-        <img class="bg-r-2" src="./assets/img/bg-r-2.png" alt="">
-        <img class="bg-r-3" src="./assets/img/bg-r-3.png" alt="">
-    </div>
-
     <header class="header">
         <div class="header-content">
             <div class="logo">
                 <img src="./assets/img/logo.png" alt="">
-                定制国庆头像
+                国庆头像
             </div>
             <!--滚动播放-->
             <transition name="notice" mode="out-in">
@@ -336,111 +327,8 @@ const save = async (isSave = true) => {
 </script>
 
 <style lang="less">
-.bg {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: -1;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1200px;
-    height: 100vh;
-
-    > img {
-        position: absolute;
-        opacity: 0.6;
-        transform: scale(1.5);
-    }
-
-    .bg-l-1 {
-        top: -18%;
-        left: -8%;
-        width: 420px;
-        animation: bg-l-1 8s linear infinite;
-    }
-
-    @keyframes bg-l-1 {
-        50% {
-            transform: translate(20%, -10%);
-            opacity: 1;
-        }
-    }
-
-    .bg-l-2 {
-        top: 5%;
-        left: -15%;
-        width: 345px;
-        opacity: 0.2;
-        animation: bg-l-2 10s linear infinite;
-    }
-
-    @keyframes bg-l-2 {
-        50% {
-            transform: translate(40%, 28%) rotate(40deg);
-            opacity: 0.4;
-        }
-    }
-
-    .bg-l-3 {
-        bottom: -30%;
-        left: -20%;
-        width: 588px;
-        animation: bg-l-3 10s linear infinite;
-    }
-
-    @keyframes bg-l-3 {
-        50% {
-            transform: translate(10%, -30%) rotate(60deg);
-            opacity: 1;
-        }
-    }
-
-    .bg-r-1 {
-        top: -24%;
-        right: -15%;
-        width: 588px;
-        animation: bg-r-1 8s linear infinite;
-    }
-
-    @keyframes bg-r-1 {
-        50% {
-            transform: translate(-10%, 20%) rotate(60deg);
-            opacity: 1;
-        }
-    }
-
-    .bg-r-2 {
-        top: 10%;
-        right: -20%;
-        width: 588px;
-        animation: bg-r-2 8s linear infinite;
-    }
-
-    @keyframes bg-r-2 {
-        50% {
-            transform: translate(-15%, -20%) rotate(60deg);
-            opacity: 1;
-        }
-    }
-
-    .bg-r-3 {
-        right: -10%;
-        bottom: -15%;
-        width: 346px;
-        animation: bg-r-3 8s linear infinite;
-    }
-
-    @keyframes bg-r-3 {
-        50% {
-            transform: translate(-20%, -30%) rotate(60deg);
-            opacity: 1;
-        }
-    }
-}
-
 .header {
-    position: sticky;
+    //position: sticky;
     top: 0;
     right: 0;
     left: 0;
@@ -448,10 +336,10 @@ const save = async (isSave = true) => {
     overflow: hidden;
     margin: 0 auto;
     width: 100%;
-    background: #ffffff80;
+    //background: #ffffff80;
     background-size: 4px 4px;
-    backdrop-filter: saturate(50%) blur(4px);
-    border-bottom: 1px solid #f2f4f8;
+    //backdrop-filter: saturate(50%) blur(4px);
+    //border-bottom: 1px solid #f2f4f8;
 
     .header-content {
         display: flex;
@@ -474,6 +362,7 @@ const save = async (isSave = true) => {
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
+                flex-shrink: 0;
             }
         }
 
@@ -759,42 +648,6 @@ main {
     }
 }
 
-.stats {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 16px auto;
-
-    > p,
-    > a {
-        display: flex;
-        align-items: center;
-        padding: 0 8px;
-        margin: 0 8px 0 0;
-        height: 24px;
-        font-size: 12px;
-        background: #ebf0f8;
-        border-radius: 4px;
-
-        > span {
-            padding-left: 4px;
-        }
-
-        > img {
-            margin-right: 4px;
-            width: 14px;
-            height: 14px;
-        }
-    }
-}
-
-footer,
-.state {
-    padding-bottom: 8px;
-    font-size: 13px;
-    text-align: center;
-}
-
 .poster {
     position: absolute;
     top: -500%;
@@ -883,43 +736,6 @@ footer,
 
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
-    .bg {
-        > img {
-            opacity: 0.4;
-            transform: scale(0.6);
-        }
-
-        .bg-l-1 {
-            top: -14%;
-            left: -20%;
-        }
-
-        .bg-l-2 {
-            top: -4%;
-            left: -40%;
-        }
-
-        .bg-l-3 {
-            bottom: -10%;
-            left: -60%;
-        }
-
-        .bg-r-1 {
-            top: -24%;
-            right: -70%;
-        }
-
-        .bg-r-2 {
-            top: 5%;
-            right: -80%;
-        }
-
-        .bg-r-3 {
-            right: -30%;
-            bottom: 10%;
-        }
-    }
-
     .header {
         .header-content {
             padding: 0 12px;
@@ -1058,45 +874,6 @@ footer,
         .wall-more {
             padding-top: 16px;
             text-align: center;
-        }
-    }
-
-    .stats {
-        margin: 10px auto;
-
-        > p,
-        > a {
-            padding: 0 6px;
-            margin: 0 6px 0 0;
-            height: 22px;
-            font-size: 12px;
-
-            > span {
-                padding-left: 4px;
-            }
-
-            > img {
-                margin-right: 1px;
-            }
-        }
-    }
-
-    footer,
-    .state {
-        padding-bottom: 6px;
-        font-size: 12px;
-        text-align: center;
-    }
-}
-
-/* pc端不使用瀑布流 */
-@media only screen and (min-width: 769px) {
-    .wall {
-        .wall-list {
-            > div {
-                grid-row: span 1 !important;
-                grid-column: span 1 !important;
-            }
         }
     }
 }
