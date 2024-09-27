@@ -168,6 +168,14 @@ const addMark = async (url) => {
 }
 
 /**
+ * @function clearMark 清除所有贴纸
+ */
+const clearMark = async () => {
+    Canvas.getObjects().filter(i => i.name.includes('mark-')).forEach(i => Canvas.remove(i))
+    Canvas.renderAll()
+}
+
+/**
  * @function save 保存作品图及效果图
  * @return { String } result base64 保存/预览时返回
  */
@@ -183,7 +191,7 @@ const save = async (): Promise<string> => {
 
 
 /* 暴露给父组件可使用的方法 */
-defineExpose({ addFrame, addMark, setFrameOpacity, save })
+defineExpose({ addFrame, addMark, setFrameOpacity, save, clearMark })
 </script>
 
 <style lang="less" scoped>

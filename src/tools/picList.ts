@@ -54,6 +54,7 @@ export const styleList: StyleInfoType[]  = [
 
 export const picList = styleList.map(item => {
     const frameList = [...Array(item.frameNum).keys()].map(num => num + 1)
+    frameList.splice(4, 2)
     item.frameList = frameList.map(i => `https://cdn.xiaoli.vip/project/custom-avatar/img/${item.id}/frame/${i}.png`)
 
     const markList = [...Array(item.markNum).keys()].map(num => num + 1)

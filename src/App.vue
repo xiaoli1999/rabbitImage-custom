@@ -11,8 +11,8 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <img src="https://cdn.xiaoli.vip/project/logo.jpg" alt="">
-                定制头像
+                <img src="./assets/img/logo.png" alt="">
+                定制国庆头像
             </div>
             <!--滚动播放-->
             <transition name="notice" mode="out-in">
@@ -36,21 +36,12 @@
             <img class="left" src="./assets/img/more-left.png" alt="" @click="changeFrame(false)">
             <div class="avatar" :class="showRound ? 'circle' : ''">
                 <Draw ref="DrawRef" :bg="originAvatarUrl" />
-                <div v-if="!originAvatarUrl" class="upload-avatar" @click="uploadImgRef.click()">
-                    <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M810.369481 489.052359c-0.014326 0-0.029676 0-0.042979 0l-281.56577 0.635473 0.590448-282.148032c0.021489-10.376325-8.372691-18.804275-18.747993-18.826787-0.014326 0-0.025583 0-0.039909 0-10.356882 0-18.764366 8.385994-18.785855 18.747993l-0.591471 282.311761-281.725406 0.636496c-10.376325 0.023536-18.767436 8.453533-18.744923 18.829857 0.023536 10.361999 8.429996 18.744923 18.785855 18.744923 0.014326 0 0.029676 0 0.042979 0l281.561677-0.635473-0.590448 282.152125c-0.021489 10.375302 8.372691 18.804275 18.747993 18.825764 0.014326 0 0.025583 0 0.039909 0 10.355859 0 18.764366-8.385994 18.785855-18.747993l0.590448-282.314831 281.728476-0.636496c10.376325-0.023536 18.768459-8.453533 18.744923-18.829857C829.131801 497.435283 820.726364 489.052359 810.369481 489.052359z"></path>
-                    </svg>
-                    <p>上传头像</p>
-                </div>
             </div>
             <img class="more-right" src="./assets/img/more-right.png" alt="" @click="changeFrame(true)">
         </div>
         <div class="avatar-panel">
-            <el-button type="warning" plain @click="showRound  = !showRound">更换形状</el-button>
-            <el-button type="success" @click="uploadImgRef.click()">上传头像</el-button>
-        </div>
-        <div class="avatar-style">
-            <div v-for="(item, index) in picList" :key="index" :class="styleIndex === index ? 'active' : ''"  @click="styleIndex = index">{{ item.name }}</div>
+            <el-button type="success" plain @click="showRound  = !showRound">更换形状</el-button>
+            <el-button type="" plain @click="init">重新定制</el-button>
         </div>
         <div class="avatar-option">
             <p>头像框</p>
@@ -92,19 +83,6 @@
         </div>
     </div>
 
-    <div class="stats">
-        <p>本站访问人数:<span id="busuanzi_value_site_uv"></span></p>
-        <p>本站访问总量:<span id="busuanzi_value_site_pv"></span></p>
-        <a class="github" href="https://github.com/xiaoli1999/custom-avatar" target="_blank">
-            <img src="./assets/img/github.png" alt="github">
-            <span>github</span>
-        </a>
-    </div>
-    <div class="state">部分素材来源于网络，非商业用途，如有侵权请联系删除。</div>
-    <footer>© 2023 All rights reserved. Powered by 黎</footer>
-
-    <input ref="uploadImgRef" id="uploadImg" type="file" accept="image/*" @change="uploadFile" style="position: absolute;top: -9999px;left: -9999px;" />
-
     <!-- 生成海报 -->
     <div id="poster" class="poster">
         <img class="poster-img" src="./assets/img/poster.png" alt="">
@@ -112,9 +90,9 @@
         <div class="poster-desc">
             <div>
                 <p>{{ picList[styleIndex].desc }}</p>
-                <p>识别二维码，定制{{ picList[styleIndex].name }}头像！</p>
+                <p>扫描二维码，定制{{ picList[styleIndex].name }}头像！</p>
             </div>
-            <img src="./assets/img/code.png" alt="">
+            <img src="./assets/img/logo-share.png" alt="">
         </div>
     </div>
 
@@ -122,7 +100,7 @@
         <div class="dialog-content">
             <img :src="avatarUrl" alt="">
             <div>
-                <el-button type="success" @click="save(true)">保存(移动端长按图片保存)</el-button>
+                <el-button type="success" text>长按图片保存!!!</el-button>
             </div>
         </div>
     </el-dialog>
@@ -131,7 +109,7 @@
         <div class="dialog-content">
             <img :src="shareUrl" alt="">
             <div>
-                <el-button type="primary" @click="save(false)">分享(移动端长按图片转发给朋友)</el-button>
+                <el-button type="primary" text>长按图片转发给朋友</el-button>
             </div>
         </div>
     </el-dialog>
@@ -167,32 +145,15 @@ const userInfo = {
 }
 
 const styleIndex = ref(1)
+const url = ref<string>('')
 const originAvatarUrl = ref<string>('')
 const selectFrameIndex = ref<number | null>(null)
 const frameUrl = ref<string>('')
 const showRound = ref<boolean>(false)
 const avatarTotal = ref(0)
 const DrawRef = ref()
-const uploadImgRef = ref()
 const loading = ref(false)
 
-const uploadFile = async (e: any) => {
-    if (!e.target.files || !e.target.files.length) return ElMessage.warning('上传失败！')
-
-    const file = e.target.files[0]
-    if (!file.type.includes('image')) return ElMessage.warning('请上传正确的图片格式！')
-
-    const url = getCreatedUrl(file) ?? ''
-    /* 用户初次上传头像默认选中第一个头像框 */
-    if (!originAvatarUrl.value) {
-        originAvatarUrl.value = url
-        selectFrame(0)
-    } else {
-        originAvatarUrl.value = url
-    }
-
-    (document.getElementById('uploadImg') as HTMLInputElement).value = ''
-}
 
 const changeFrame = (isNext) => {
     if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
@@ -293,8 +254,19 @@ const loadMore = () => {
     pageNo.value++
 }
 
+const init = () => {
+    originAvatarUrl.value = url.value
+    selectFrame(0)
+    DrawRef.value.clearMark()
+}
+
 onMounted(async () => {
     progress.close()
+
+    url.value =  window.location.search.split('?url=')[1]
+    if (!url.value) ElMessage.warning('请先更新头像信息')
+
+    init()
     await getAvatarList()
     startNotice()
 })
@@ -669,6 +641,7 @@ main {
         display: flex;
         align-items: center;
         padding: 0 20px;
+        margin-top: 10px;
 
         > p {
             margin-right: 20px;
@@ -879,9 +852,9 @@ footer,
 
         > img {
             margin-right: 40px;
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
         }
     }
 }
