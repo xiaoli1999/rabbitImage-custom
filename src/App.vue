@@ -254,7 +254,7 @@ const init = () => {
 onMounted(async () => {
     progress.close()
 
-    url.value =  window.location.search.split('?url=')[1]
+    url.value =  window.location.search.split('?url=')[1] + '?'+ Date.now()
     if (!url.value) ElMessage.warning('请先更新头像信息')
 
     init()
